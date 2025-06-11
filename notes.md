@@ -899,3 +899,204 @@ Kalau file penting, **copy dulu** ke flashdisk. Setelah yakin file berhasil disa
 ---
 
 Kalau mau aku bantu jelaskan lebih detail perintah atau tips aman transfer data, tinggal bilang!
+
+
+Sip! Berikut detail langkah-langkah dan tips praktis buat transfer file ke flashdisk dengan aman di Linux dan Windows.
+
+---
+
+## Transfer File ke Flashdisk dengan Aman
+
+### Langkah di Linux
+
+1. **Colok flashdisk**
+   Biasanya otomatis ter-mount, misal di `/media/username/Flashdisk`
+
+2. **Cek lokasi mount flashdisk**
+
+   ```bash
+   ls /media/username/
+   ```
+
+   atau
+
+   ```bash
+   df -h
+   ```
+
+   Cari yang berlabel flashdisk kamu.
+
+3. **Copy file ke flashdisk**
+   Misal file ada di `~/Documents/file.txt` dan flashdisk di `/media/username/Flashdisk`
+
+   ```bash
+   cp ~/Documents/file.txt /media/username/Flashdisk/
+   ```
+
+4. **Pastikan file berhasil disalin**
+
+   ```bash
+   ls /media/username/Flashdisk/
+   ```
+
+   dan coba buka file dari flashdisk.
+
+5. **Eject flashdisk dengan aman**
+
+   ```bash
+   sudo umount /media/username/Flashdisk
+   ```
+
+   Jangan langsung cabut sebelum ini supaya data benar-benar tertulis.
+
+---
+
+### Langkah di Windows
+
+1. **Colok flashdisk**
+
+2. **Buka Command Prompt (CMD)** atau PowerShell
+
+3. **Cek drive flashdisk**
+   Biasanya muncul sebagai `E:` atau `F:`
+   Ketik:
+
+   ```cmd
+   dir E:\
+   ```
+
+   untuk lihat isi flashdisk
+
+4. **Copy file ke flashdisk**
+   Misal file di `C:\Users\User\Documents\file.txt`
+
+   ```cmd
+   copy C:\Users\User\Documents\file.txt E:\
+   ```
+
+5. **Pastikan file sudah di flashdisk**
+
+   ```cmd
+   dir E:\
+   ```
+
+6. **Eject flashdisk** lewat GUI (klik kanan > Eject)
+   atau dari system tray icon “Safely Remove Hardware”
+
+---
+
+## Tips Transfer File Aman
+
+* **Gunakan copy dulu, jangan langsung cut**
+* **Jangan cabut flashdisk saat transfer sedang berlangsung**
+* **Eject atau unmount flashdisk dulu sebelum cabut**
+* **Backup data penting sebelum transfer besar**
+* **Kalau transfer besar atau banyak file, pakai software transfer khusus (misal rsync di Linux)**
+
+---
+
+Kalau kamu mau aku buatkan skrip otomatis transfer file atau contoh perintah lanjutan, tinggal bilang!
+
+
+Oke, aku jelasin perbedaan **rsync** dan **TeraCopy** secara singkat dan jelas ya!
+
+---
+
+## Apa itu?
+
+* **rsync**
+  Software open-source untuk sinkronisasi dan transfer file di sistem Unix/Linux, juga tersedia di Windows lewat Cygwin atau WSL.
+  Fokus pada efisiensi, hanya transfer file yang berubah.
+
+* **TeraCopy**
+  Aplikasi transfer file khusus Windows yang mempercepat proses copy/move, dengan fitur seperti pause/resume dan error recovery.
+
+---
+
+## Perbedaan Utama
+
+| Aspek                    | rsync                                                                        | TeraCopy                                        |
+| ------------------------ | ---------------------------------------------------------------------------- | ----------------------------------------------- |
+| **Platform**             | Linux, macOS, Windows (via WSL/Cygwin)                                       | Windows                                         |
+| **Fungsi utama**         | Sinkronisasi file dan backup, copy file dengan cek perubahan                 | Mempercepat dan memperbaiki transfer file biasa |
+| **Cara kerja**           | Transfer hanya file yang berubah (delta transfer), hemat bandwidth dan waktu | Copy/move file secara cepat dan stabil          |
+| **Fitur error handling** | Cek checksum, bisa retry, resume transfer jika terganggu                     | Pause, resume, skip file bermasalah             |
+| **Interface**            | Command line                                                                 | GUI dan command line                            |
+| **Penggunaan umum**      | Backup, mirror folder, sync remote dan lokal                                 | Copy file biasa di Windows, transfer besar      |
+| **Kecepatan**            | Sangat efisien untuk sync file besar dan remote                              | Cepat di file lokal, fokus pada kecepatan copy  |
+
+---
+
+## Kapan pakai mana?
+
+* **Pakai rsync kalau:**
+
+  * Butuh sinkronisasi data (backup, mirror folder)
+  * Transfer ke server atau antar komputer via jaringan
+  * Butuh efisiensi bandwidth dan keamanan data
+
+* **Pakai TeraCopy kalau:**
+
+  * Transfer file besar di Windows antar drive lokal atau flashdisk
+  * Mau fitur pause/resume transfer file
+  * Ingin GUI yang user-friendly untuk copy/move file
+
+---
+
+Kalau mau, aku bisa kasih contoh penggunaan `rsync` di terminal atau cara pakai TeraCopy! Mau?
+
+
+Oke, aku kasih contoh dasar penggunaan **rsync** di terminal Linux/macOS, plus cara pakai **TeraCopy** di Windows.
+
+---
+
+## Contoh Penggunaan rsync (Linux/macOS)
+
+### 1. Sinkronisasi folder lokal
+
+Copy isi folder `source/` ke folder `destination/`, hanya file yang berubah saja yang disalin:
+
+```bash
+rsync -avh --progress source/ destination/
+```
+
+* `-a` : archive mode (rekursif + preserve atribut file)
+* `-v` : verbose (tampilkan proses)
+* `-h` : human-readable size
+* `--progress` : tampilkan progress transfer
+
+---
+
+### 2. Sinkronisasi ke server remote
+
+Copy folder lokal ke server via SSH:
+
+```bash
+rsync -avh --progress /home/user/data/ user@server:/backup/data/
+```
+
+---
+
+### 3. Resume transfer file besar jika terputus
+
+`rsync` otomatis bisa melanjutkan transfer yang terputus, cukup jalankan perintah di atas lagi.
+
+---
+
+## Cara Pakai TeraCopy (Windows)
+
+1. **Download dan install** TeraCopy dari situs resmi [teracopy.com](https://www.teracopy.com/)
+
+2. Setelah install, buka **File Explorer**, pilih file/folder yang ingin dicopy.
+
+3. Klik kanan, pilih **TeraCopy > Copy** atau **TeraCopy > Move**.
+
+4. Jendela TeraCopy akan muncul, klik **Paste** untuk mulai transfer.
+
+5. Kamu bisa **pause, resume**, atau **skip** file yang error.
+
+6. Setelah selesai, TeraCopy kasih laporan apakah transfer berhasil atau ada masalah.
+
+---
+
+Kalau kamu mau aku buatkan skrip rsync untuk kebutuhan spesifik, atau tips pakai TeraCopy lebih maksimal, tinggal bilang!
