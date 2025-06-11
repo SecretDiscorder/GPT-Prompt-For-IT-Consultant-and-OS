@@ -1100,3 +1100,105 @@ rsync -avh --progress /home/user/data/ user@server:/backup/data/
 ---
 
 Kalau kamu mau aku buatkan skrip rsync untuk kebutuhan spesifik, atau tips pakai TeraCopy lebih maksimal, tinggal bilang!
+Oke, aku jelaskan singkat tentang:
+
+* **fsck** (Linux)
+* **smartctl** (diagnosa disk)
+* Cara fix error filesystem di Windows dan Linux
+
+---
+
+## 1. **fsck (File System Consistency Check) - Linux**
+
+* **Fungsi:** Mengecek dan memperbaiki error sistem berkas (file system) di Linux.
+* Biasanya dipakai saat boot kalau sistem terdeteksi bermasalah atau file corrupt.
+
+### Cara pakai:
+
+```bash
+sudo fsck /dev/sdXY
+```
+
+* `/dev/sdXY` = partisi yang mau dicek (misal `/dev/sda1`)
+* Tambahkan opsi `-y` untuk auto jawab “yes” ke perbaikan:
+
+```bash
+sudo fsck -y /dev/sda1
+```
+
+---
+
+## 2. **smartctl (SMART Control) - Disk Health Check**
+
+* **Fungsi:** Mengecek kondisi kesehatan hardware hard disk/SSD menggunakan fitur SMART (Self-Monitoring, Analysis, and Reporting Technology).
+* Bisa memberi info apakah disk mulai rusak secara fisik.
+
+### Cara pakai:
+
+Install dulu dengan:
+
+```bash
+sudo apt install smartmontools  # Debian/Ubuntu
+```
+
+Cek status disk:
+
+```bash
+sudo smartctl -a /dev/sda
+```
+
+Lakukan tes singkat:
+
+```bash
+sudo smartctl -t short /dev/sda
+```
+
+Lalu cek hasil tes:
+
+```bash
+sudo smartctl -a /dev/sda
+```
+
+---
+
+## 3. **Cara Fix Error Filesystem di Linux**
+
+* Gunakan `fsck` pada partisi yang bermasalah (partisi tidak sedang dipakai / unmounted).
+* Kalau ingin perbaiki partisi root, bisa masuk ke mode recovery atau live USB.
+* Contoh:
+
+```bash
+sudo umount /dev/sda1
+sudo fsck -y /dev/sda1
+```
+
+---
+
+## 4. **Cara Fix Error Filesystem di Windows**
+
+* Gunakan tool bawaan: **CHKDSK (Check Disk)**
+
+### Via Command Prompt:
+
+```cmd
+chkdsk C: /f /r
+```
+
+* `C:` = drive yang dicek
+* `/f` = perbaiki error secara otomatis
+* `/r` = cari dan pulihkan bad sector
+
+Jika drive sedang dipakai, Windows akan minta restart untuk menjalankan chkdsk saat boot.
+
+---
+
+### Via GUI Windows:
+
+1. Buka **This PC**
+2. Klik kanan drive > **Properties**
+3. Tab **Tools** > klik **Check** di bagian Error checking
+4. Ikuti instruksi perbaikan
+
+---
+
+Kalau kamu mau aku bantu buat step-by-step pakai fsck/smartctl, atau cara memperbaiki error spesifik, bilang aja ya!
